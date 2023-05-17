@@ -1,14 +1,15 @@
 buildscript {
-    if (project == rootProject) {
-        repositories {
-            google()
-            mavenCentral()
-            jcenter()
-        }
+    def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['RNSAC_kotlinVersion']
 
-        dependencies {
-            classpath 'com.android.tools.build:gradle:3.5.3'
-        }
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
@@ -53,7 +54,10 @@ repositories {
     jcenter()
 }
 
+def kotlin_version = getExtOrDefault('kotlinVersion', project.properties['RNSAC_kotlinVersion'])
+
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
